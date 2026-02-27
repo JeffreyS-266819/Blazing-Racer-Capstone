@@ -1,0 +1,1 @@
+If a file is more than 100MB it will not let me commit anything else to the repository, I will check with my teammates about this or the professor if they can figure out what to do about it.
