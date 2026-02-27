@@ -1,1 +1,1 @@
-If a file is more than 100MB it will not let me commit anything else to the repository, I will check with my teammates about this or the professor if they can figure out what to do about it.
+This is temporary (hopefully). The zip of the prototype of the game is more than 100MB and if i were to upload it i wount be able commit anything else to the repository. Ill check with my teammates about it. If they don't know a work around i will end up needing to email the professor.
