@@ -1,0 +1,1 @@
+In version 2, the work in progress versions of the Main Menu Scenery and the basic Race Track layout were add in. Inadition the foundation for the main menu buttons were created.
