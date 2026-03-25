@@ -1,0 +1,1 @@
+In version 4, The Sign In Screen was reworked and the actual functionality was implemented as well.
