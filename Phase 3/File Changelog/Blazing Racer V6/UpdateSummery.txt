@@ -1,0 +1,1 @@
+In version 6, The main race track has been completed at least functional wise, later on it will be made prettier. For now we are focusing on having something functional. In addition we are thinking of replacing the 3d main menu with a exported image of it straight from blender since the will reduce the time needed for the main menu looks.
