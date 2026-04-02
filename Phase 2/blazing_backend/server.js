@@ -17,7 +17,6 @@ const db = mysql.createConnection({
     database: "blazing_racer"
 });
 
-// connect to database
 db.connect(err => {
     if (err) {
         console.log("Database connection failed");
@@ -32,55 +31,44 @@ app.get("/test", (req, res) => {
     res.send("Backend is working");
 });
 
-// login / register route
+// ----------------- LOGIN -----------------
 app.post("/login", (req, res) => {
-
     const { username, password } = req.body;
 
-    console.log("Login attempt:", username);
-
-    if (!username || !password) {
-        return res.send("Enter username and password");
-    }
+    if (!username || !password) return res.send("Enter username and password");
 
     const sql = "SELECT * FROM users WHERE username = ?";
-
     db.query(sql, [username], (err, result) => {
+        if (err) return res.send("Database error");
 
-        if (err) {
-            console.log(err);
-            return res.send("Database error");
+        if (result.length === 0) return res.send("User does not exist");
+
+        if (result[0].password === password) {
+            return res.send("Login successful");
+        } else {
+            return res.send("Incorrect password");
         }
-
-        // user exists
-        if (result.length > 0) {
-
-            if (result[0].password === password) {
-                res.send("Login successful");
-            } else {
-                res.send("Incorrect password");
-            }
-
-        }
-        // user does not exist → create account
-        else {
-
-            const insert = "INSERT INTO users (username, password) VALUES (?, ?)";
-
-            db.query(insert, [username, password], (err) => {
-
-                if (err) {
-                    console.log(err);
-                    return res.send("Username already exists");
-                }
-
-                res.send("Account created");
-            });
-
-        }
-
     });
+});
 
+// ----------------- CREATE ACCOUNT -----------------
+app.post("/create", (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) return res.send("Enter username and password");
+
+    const sql = "SELECT * FROM users WHERE username = ?";
+    db.query(sql, [username], (err, result) => {
+        if (err) return res.send("Database error");
+
+        if (result.length > 0) return res.send("Username already exists");
+
+        const insert = "INSERT INTO users (username, password) VALUES (?, ?)";
+        db.query(insert, [username, password], (err) => {
+            if (err) return res.send("Database error");
+            res.send("Account created");
+        });
+    });
 });
 
 // start server
