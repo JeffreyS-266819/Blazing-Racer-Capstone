@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
             loginStatusText.text = www.downloadHandler.text;
             if (www.downloadHandler.text == "Login successful")
             {
-                SceneManager.LoadScene("MainScene");
+                SceneManager.LoadScene("MainMenu");
                 Destroy(loginPanel.transform.parent.gameObject);
             }
         }
