@@ -1,0 +1,1 @@
+In version 8, The tutorial was added. It mostly consists of text with the controls and gif of car doing said movements. In addition, a waring now has been added for people who don't look at the tutorial and its their first time.

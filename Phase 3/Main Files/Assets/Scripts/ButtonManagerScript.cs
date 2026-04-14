@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 public class ButtonManagerScript : MonoBehaviour
 {
 
+    public GameObject TutorialCanvas;
+
+    //Give buttons destinations for when they are pressed | -------------------------------------------------------------
     public void GoToDevRoomScenes()
     {
         SceneManager.LoadScene("DevRoom");
@@ -24,6 +27,8 @@ public class ButtonManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene("SignInScreen");
     }
+
+    //This give quit button functionallity and also make quit button work will previewing | -------------------------
     public void QuitGame()
     {
         Application.Quit();
@@ -32,6 +37,17 @@ public class ButtonManagerScript : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+    //Controls the tutroial canvas buttons | -----------------------------------------------------------------------
+    public void OpenTutorial()
+    {
+        TutorialCanvas.SetActive(true);
+    }
+
+    public void ExitTutorial()
+    {
+        TutorialCanvas.SetActive(false);
     }
 
 }

@@ -57,12 +57,16 @@ public class RaceManager : MonoBehaviour
             {
                 Debug.Log("race finished");
 
-				// broken for some reason, will have a fix soon
-                //var timer = FindObjectOfType<TimerDisplayTMP>();
-                //if (timer != null)
-                //{
-                //    timer.enabled = false;
-                //}
+				var timer = FindObjectOfType<TimerDisplay>();
+
+				if (timer != null)
+				{
+					timer.StopTimer();
+
+					float finalTime = timer.FinalTime;
+
+					Debug.Log("Final Time: " + finalTime);
+				}
             }
             else
             {
