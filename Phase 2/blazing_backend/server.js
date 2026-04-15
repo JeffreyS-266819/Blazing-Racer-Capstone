@@ -108,6 +108,26 @@ app.post("/saveRace", (req, res) => {
     });
 });
 
+// ----------------- LEADERBOARD -----------------
+app.get("/leaderboard", (req, res) => {
+    const sql = `
+        SELECT u.username, r.lap_time
+        FROM RaceAttempts r
+        JOIN users u ON r.user_id = u.user_id
+        ORDER BY r.lap_time ASC
+        LIMIT 5
+    `;
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ error: "Database error" });
+        }
+
+        res.json(results);
+    });
+});
+
 // ----------------- START SERVER -----------------
 app.listen(3000, () => {
     console.log("Server running on port 3000");
