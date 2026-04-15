@@ -26,25 +26,32 @@ db.connect(err => {
     console.log("Connected to MySQL");
 });
 
-// test route
+// ----------------- TEST -----------------
 app.get("/test", (req, res) => {
     res.send("Backend is working");
 });
 
 // ----------------- LOGIN -----------------
 app.post("/login", (req, res) => {
-    const { username, password } = req.body;
+    const username = req.body.username?.trim();
+    const password = req.body.password?.trim();
 
-    if (!username || !password) return res.send("Enter username and password");
+    if (!username || !password)
+        return res.send("Enter username and password");
 
     const sql = "SELECT * FROM users WHERE username = ?";
+
     db.query(sql, [username], (err, result) => {
         if (err) return res.send("Database error");
 
-        if (result.length === 0) return res.send("User does not exist");
+        if (result.length === 0)
+            return res.send("User does not exist");
 
-        if (result[0].password === password) {
-            return res.send("Login successful");
+        const user = result[0];
+
+        if (user.password === password) {
+            // IMPORTANT: send user_id to Unity
+            return res.send("SUCCESS|" + user.user_id);
         } else {
             return res.send("Incorrect password");
         }
@@ -53,25 +60,55 @@ app.post("/login", (req, res) => {
 
 // ----------------- CREATE ACCOUNT -----------------
 app.post("/create", (req, res) => {
-    const { username, password } = req.body;
+    const username = req.body.username?.trim();
+    const password = req.body.password?.trim();
 
-    if (!username || !password) return res.send("Enter username and password");
+    if (!username || !password)
+        return res.send("Enter username and password");
 
-    const sql = "SELECT * FROM users WHERE username = ?";
-    db.query(sql, [username], (err, result) => {
+    const checkUser = "SELECT * FROM users WHERE username = ?";
+
+    db.query(checkUser, [username], (err, result) => {
         if (err) return res.send("Database error");
 
-        if (result.length > 0) return res.send("Username already exists");
+        if (result.length > 0)
+            return res.send("Username already exists");
 
         const insert = "INSERT INTO users (username, password) VALUES (?, ?)";
+
         db.query(insert, [username, password], (err) => {
             if (err) return res.send("Database error");
+
             res.send("Account created");
         });
     });
 });
 
-// start server
+// ----------------- SAVE RACE TIME -----------------
+app.post("/saveRace", (req, res) => {
+    const user_id = req.body.user_id;
+    const lap_time = req.body.lap_time;
+    const date_played = req.body.date_played;
+
+    if (!user_id || !lap_time)
+        return res.send("Missing data");
+
+    const sql = `
+        INSERT INTO RaceAttempts (user_id, lap_time, date_played)
+        VALUES (?, ?, ?)
+    `;
+
+    db.query(sql, [user_id, lap_time, date_played], (err) => {
+        if (err) {
+            console.log(err);
+            return res.send("Database error");
+        }
+
+        res.send("Saved");
+    });
+});
+
+// ----------------- START SERVER -----------------
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
