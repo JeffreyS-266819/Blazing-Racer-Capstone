@@ -1,3 +1,4 @@
+CREATE blazing_racer;
 USE blazing_racer;
 
 DROP TABLE IF EXISTS RaceAttempts;
