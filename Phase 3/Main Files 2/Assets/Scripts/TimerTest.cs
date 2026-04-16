@@ -5,12 +5,11 @@ using TMPro;
 public class TimerDisplay : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-
     private float elapsedTime = 0f;
-    public bool isRunning = true;
-
+    public bool isRunning = true;    
     // Exposed read-only property
     public float FinalTime => elapsedTime;
+
 
     void Update()
     {

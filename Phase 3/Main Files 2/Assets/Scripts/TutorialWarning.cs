@@ -19,6 +19,7 @@ public class TutorialWarning : MonoBehaviour
         }
         else
         {
+            Time.timeScale = 1f;
             SceneManager.LoadScene("MainTrack");
         }
     }

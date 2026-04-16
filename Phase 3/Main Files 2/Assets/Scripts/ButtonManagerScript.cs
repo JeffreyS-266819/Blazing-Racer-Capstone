@@ -20,6 +20,7 @@ public class ButtonManagerScript : MonoBehaviour
 
     public void GoToMainTrackScene()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainTrack");
     }
 
@@ -28,6 +29,11 @@ public class ButtonManagerScript : MonoBehaviour
         SceneManager.LoadScene("SignInScreen");
     }
 
+    public void ReloadCurrentScene() 
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     //This give quit button functionallity and also make quit button work will previewing | -------------------------
     public void QuitGame()
     {

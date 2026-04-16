@@ -21,6 +21,7 @@ public class RaceManager : MonoBehaviour
     {
         lastCheckpointPosition = startPoint.position;
         lastCheckpointRotation = startPoint.rotation;
+        Time.timeScale = 1f;
     }
 
     public void PassCheckpoint(int checkpointIndex, Transform checkpointTransform)
