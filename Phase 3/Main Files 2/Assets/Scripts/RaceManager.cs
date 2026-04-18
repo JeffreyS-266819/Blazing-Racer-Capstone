@@ -16,6 +16,9 @@ public class RaceManager : MonoBehaviour
 
     private Vector3 lastCheckpointPosition;
     private Quaternion lastCheckpointRotation;
+	
+	public int currnetLapP => currentLap;
+	public int totalLapsP => totalLaps;
 
     void Start()
     {
