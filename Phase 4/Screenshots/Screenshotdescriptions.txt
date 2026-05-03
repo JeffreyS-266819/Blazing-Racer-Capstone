@@ -1,0 +1,15 @@
+1 - MainMenuUI: The main menu of the game, with many of the basic features. Featuring a tutorial, sign in, leaderboard, and settings. But setting isn't function due it be set in the backburner as we were finishing the main game functions.
+
+2 - SignInUI: This is the spot were a player can sign in into their account. which allow them to have their time be added onto the leaderboard.
+
+3 - CreateAccUI: If a player doesn't have an account this is were they can create one. It has to have an user and password longer than 3 characters. Unfortunately we weren't able to implement something like a google sign in which restricted to a mobile phone games only.
+
+4 - TutorialUI: This is a simple tutorial were players can read how to controls the car and the objective of the game.
+
+5 - WarningUI: This appears if a user hasn't opened the tutorial. It however can be ignored if the user wants to or can be close to allow the user to look at the tutorial.
+
+6 - PauseMenuUI: This can be opened during the race, it can allow an user to do a few things. They can retry which resets the race back to the begin with a new time. Or they could exit back to the main menu which, doesn't count their time. Also when in the pause menu the game is froze, which stops the time and allow the user to comfortably do something else if needed.
+
+7 - Time&LapUI: This show the users time and laps during a race, with the text changing as the time continues or if they have more than one lap. Unfotnattlyy there isn't a way in game to add more laps.
+
+8 - GameFinishUI: This is shown once the user completes a race. If the user is signed in their time is automatically uploaded to the leaderboard. The UI allow them to start a new race or return to the main menu.

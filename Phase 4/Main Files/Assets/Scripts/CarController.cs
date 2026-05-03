@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class CarController : MonoBehaviour
 {
     [Header("Wheel Colliders")]
@@ -32,14 +33,24 @@ public class CarController : MonoBehaviour
     [Header("Drive Type")]
     public bool rearWheelDrive = true;
 
+    [Header("Audio")]
+    public AudioClip idleClip;
+    public AudioClip engineRoarClip;
+    public AudioClip tireScreechClip;
+
+    private AudioSource audioSource;
     private Rigidbody rb;
 
     private Quaternion flOffset, frOffset, rlOffset, rrOffset;
+    private bool isTouchingGround;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass += centerOfMassOffset;
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.loop = true;
     }
 
     void Start()
@@ -50,29 +61,37 @@ public class CarController : MonoBehaviour
         rrOffset = ComputeMeshOffset(rearRight, rearRightMesh);
     }
 
+    // 🔴 THIS RUNS EVEN WHEN TIME SCALE = 0
+    void Update()
+    {
+        if (Time.timeScale == 0f)
+        {
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+        }
+    }
+
     void FixedUpdate()
     {
         ReadInputs(out float steer, out float throttle, out bool braking);
 
         float speed = rb.linearVelocity.magnitude;
 
-        // Steering
+        isTouchingGround = frontLeft.isGrounded || frontRight.isGrounded ||
+                           rearLeft.isGrounded || rearRight.isGrounded;
+
+        HandleAudio(throttle, braking);
+
         float steerAngle = steer * maxSteerAngle;
         frontLeft.steerAngle = steerAngle;
         frontRight.steerAngle = steerAngle;
 
-        // Clear previous values first
-        frontLeft.motorTorque = 0f;
-        frontRight.motorTorque = 0f;
-        rearLeft.motorTorque = 0f;
-        rearRight.motorTorque = 0f;
+        frontLeft.motorTorque = frontRight.motorTorque = 0f;
+        rearLeft.motorTorque = rearRight.motorTorque = 0f;
 
-        frontLeft.brakeTorque = 0f;
-        frontRight.brakeTorque = 0f;
-        rearLeft.brakeTorque = 0f;
-        rearRight.brakeTorque = 0f;
+        frontLeft.brakeTorque = frontRight.brakeTorque = 0f;
+        rearLeft.brakeTorque = rearRight.brakeTorque = 0f;
 
-        // Motor torque
         float torque = throttle * motorTorque;
 
         if (rearWheelDrive)
@@ -86,7 +105,6 @@ public class CarController : MonoBehaviour
             frontRight.motorTorque = torque;
         }
 
-        // Manual brake
         if (braking)
         {
             frontLeft.brakeTorque = brakeTorque;
@@ -95,7 +113,6 @@ public class CarController : MonoBehaviour
             rearRight.brakeTorque = brakeTorque;
         }
 
-        // Auto-brake only when player is not trying to move
         bool noThrottle = Mathf.Abs(throttle) < 0.05f;
 
         if (!braking && noThrottle)
@@ -119,14 +136,51 @@ public class CarController : MonoBehaviour
             }
         }
 
-        // Downforce
         rb.AddForce(-transform.up * downforce * speed);
 
-        // Wheel visuals
         UpdateWheelVisual(frontLeft, frontLeftMesh, flOffset);
         UpdateWheelVisual(frontRight, frontRightMesh, frOffset);
         UpdateWheelVisual(rearLeft, rearLeftMesh, rlOffset);
         UpdateWheelVisual(rearRight, rearRightMesh, rrOffset);
+    }
+
+    void HandleAudio(float throttle, bool braking)
+    {
+        if (Time.timeScale == 0f)
+        {
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+            return;
+        }
+
+        if (braking && isTouchingGround)
+        {
+            if (audioSource.clip != tireScreechClip)
+            {
+                audioSource.clip = tireScreechClip;
+                audioSource.Play();
+            }
+        }
+        else if (throttle > 0.1f && isTouchingGround)
+        {
+            if (audioSource.clip != engineRoarClip)
+            {
+                audioSource.clip = engineRoarClip;
+                audioSource.Play();
+            }
+        }
+        else if (isTouchingGround)
+        {
+            if (audioSource.clip != idleClip)
+            {
+                audioSource.clip = idleClip;
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.Stop();
+        }
     }
 
     static void ReadInputs(out float steer, out float throttle, out bool braking)

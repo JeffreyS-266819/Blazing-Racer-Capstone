@@ -678,6 +678,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2593301411753559641, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
+      propertyPath: idleClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 843ac2408ce6e95409aaa774cbfe45ee, type: 3}
+    - target: {fileID: 2593301411753559641, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
       propertyPath: downforce
       value: 80
       objectReference: {fileID: 0}
@@ -694,9 +698,17 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2593301411753559641, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
+      propertyPath: engineRoarClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 36efc3ae5820ebb4abb7140194f03ecf, type: 3}
+    - target: {fileID: 2593301411753559641, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
       propertyPath: rearWheelDrive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2593301411753559641, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
+      propertyPath: tireScreechClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5b00e4660873d7c439737394bdb3c8aa, type: 3}
     - target: {fileID: 3070751359752971850, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
       propertyPath: m_TagString
       value: Player
@@ -704,6 +716,14 @@ PrefabInstance:
     - target: {fileID: 3960837418543500115, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483099742195783501, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483099742195783501, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
+      propertyPath: m_Volume
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4726755876335752752, guid: c0c5eb9357f40e145bc32bed7a1b60d1, type: 3}
       propertyPath: m_TagString
@@ -3530,7 +3550,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 23c973df504d6324e91a8e4d79b9a47a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
